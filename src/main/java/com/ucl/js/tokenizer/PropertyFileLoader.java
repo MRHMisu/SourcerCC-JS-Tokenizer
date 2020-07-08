@@ -12,7 +12,7 @@ public class PropertyFileLoader {
         String requiredPorprerty = "";
         try {
 
-            String filename = "tokenizer.properties";
+            String filename = "config.properties";
             input = PropertyFileLoader.class.getClassLoader().getResourceAsStream(filename);
             if (input == null) {
                 System.out.println("Sorry, unable to find " + filename);

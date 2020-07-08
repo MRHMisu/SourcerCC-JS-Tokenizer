@@ -5,6 +5,7 @@ import java.util.*;
 public class Tokenizer {
 
     private String inputString;
+    private int numberOfToken;
 
     public Tokenizer(String inputString) {
         this.inputString = inputString;
@@ -16,6 +17,11 @@ public class Tokenizer {
         Map<String, Integer> tokenFrequencyMap = getTokenFrequencyMap(tokenList);
         String token = createToken(tokenFrequencyMap);
         return token;
+    }
+
+    public int getNumberOfToken() {
+        List<String> tokenList = getTokenList();
+        return tokenList.size();
     }
 
     public String createToken(Map<String, Integer> map) {

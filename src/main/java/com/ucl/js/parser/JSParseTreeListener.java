@@ -23,7 +23,6 @@ import java.util.Map;
 
 public class JSParseTreeListener extends JavaScriptParserBaseListener {
 
-    private ParseTree parseTree;
     private SourceFile sourceFile;
     private Map<Integer, Integer> sourceStartEndMap;
     private Map<Integer, String> sourceCodeMap;
@@ -34,10 +33,8 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
      * Constructor to build JSParseTreeListener
      *
      * @param sourceFile JavaScript source file path
-     * @param parseTree  ANTLR4 generated Parse Tree
      */
-    public JSParseTreeListener(SourceFile sourceFile, ParseTree parseTree) {
-        this.parseTree = parseTree;
+    public JSParseTreeListener(SourceFile sourceFile) {
         this.sourceFile = sourceFile;
         this.sourceStartEndMap = new HashMap<>();
         this.sourceCodeMap = new HashMap<>();
@@ -81,10 +78,32 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
             }
         }
         String codeStream = getSourceCode(tree);
-        String tokenStream = new Tokenizer(codeStream).getToken();
-        CodeBlock codeBlock = new CodeBlock(this.sourceFile.getParentId(), blockIdCounter, this.sourceFile.getFilePath(), startLine, endLine, tokenStream);
+        Tokenizer tokenizer = new Tokenizer(codeStream);
+        String tokenStream = tokenizer.getToken();
+        int numberOfTokens = tokenizer.getNumberOfToken();
+        CodeBlock codeBlock = new CodeBlock(this.sourceFile.getParentId(), blockIdCounter,
+                this.sourceFile.getFilePath(), startLine, endLine, tokenStream, numberOfTokens);
         this.codeBlocks.add(codeBlock);
         this.blockIdCounter++;
+    }
+
+    /**
+     * This method builds a CodeBlock object using the complete source code of the file.
+     *
+     * @param tree ANTLR4 generated Parse Tree
+     * @return A CodeBlock Object containing the whole source code of the file block.
+     */
+    public CodeBlock getFileLevelCodeBlock(ParseTree tree) {
+        ParserRuleContext ctx = (ParserRuleContext) tree;
+        int startLine = ctx.getStart().getLine();
+        int endLine = ctx.getStop().getLine();
+        String codeStream = getSourceCode(tree);
+        Tokenizer tokenizer = new Tokenizer(codeStream);
+        String tokenStream = tokenizer.getToken();
+        int numberOfTokens = tokenizer.getNumberOfToken();
+        CodeBlock codeBlock = new CodeBlock(this.sourceFile.getParentId(), blockIdCounter,
+                this.sourceFile.getFilePath(), startLine, endLine, tokenStream, numberOfTokens);
+        return codeBlock;
     }
 
 

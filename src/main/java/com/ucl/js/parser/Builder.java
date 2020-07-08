@@ -2,7 +2,6 @@ package com.ucl.js.parser;
 
 import javascript.JavaScriptLexer;
 import javascript.JavaScriptParser;
-import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -13,7 +12,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
  */
 public final class Builder {
 
-    private static final DescriptiveBailErrorListener ERROR_LISTENER = new DescriptiveBailErrorListener();
+    private static final ErrorListener ERROR_LISTENER = new ErrorListener();
 
     /**
      * This class will not be instantiated.
@@ -54,16 +53,6 @@ public final class Builder {
             this.parser.addErrorListener(ERROR_LISTENER);
         }
 
-        /**
-         * Create Parser with ANTLRErrorListener
-         *
-         * @param listener ANTLRErrorListener to receive the errors;
-         */
-        public Parser withErrorListener(ANTLRErrorListener listener) {
-            this.parser.removeErrorListeners();
-            this.parser.addErrorListener(listener);
-            return this;
-        }
 
         /**
          * Build JavaScript Parser
