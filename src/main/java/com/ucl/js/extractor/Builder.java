@@ -1,4 +1,4 @@
-package com.ucl.js.parser;
+package com.ucl.js.extractor;
 
 import javascript.JavaScriptLexer;
 import javascript.JavaScriptParser;

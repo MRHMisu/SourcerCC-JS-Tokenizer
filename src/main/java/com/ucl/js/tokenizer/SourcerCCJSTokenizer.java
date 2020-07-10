@@ -2,8 +2,8 @@ package com.ucl.js.tokenizer;
 
 import com.ucl.js.document.Configuration;
 import com.ucl.js.document.SourceFile;
-import com.ucl.js.parser.Builder;
-import com.ucl.js.parser.JSParseTreeListener;
+import com.ucl.js.extractor.Builder;
+import com.ucl.js.extractor.JSParseTreeListener;
 import com.ucl.js.document.CodeBlock;
 import javascript.JavaScriptParser;
 import org.antlr.v4.runtime.CharStream;

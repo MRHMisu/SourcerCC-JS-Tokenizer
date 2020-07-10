@@ -53,7 +53,7 @@ public class CodeBlock {
     }
 
     public String getTokenLine() {
-        return this.parentId + "," + this.getBlockId() + this.getTokenStream() + "\n";
+        return this.parentId + "," + this.getBlockId() + "@#@" + this.getTokenStream() + "\n";
 
     }
 }

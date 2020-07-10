@@ -1,4 +1,4 @@
-package com.ucl.js.parser;
+package com.ucl.js.extractor;
 
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;

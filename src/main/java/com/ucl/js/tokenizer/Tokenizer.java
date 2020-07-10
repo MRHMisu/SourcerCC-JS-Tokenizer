@@ -5,7 +5,6 @@ import java.util.*;
 public class Tokenizer {
 
     private String inputString;
-    private int numberOfToken;
 
     public Tokenizer(String inputString) {
         this.inputString = inputString;
@@ -35,7 +34,7 @@ public class Tokenizer {
     }
 
     private Map<String, Integer> getTokenFrequencyMap(List<String> tokenList) {
-        Map<String, Integer> map = new TreeMap<String, Integer>();
+        Map<String, Integer> map = new TreeMap<>();
         for (String token : tokenList) {
             int occurrences = Collections.frequency(tokenList, token);
             map.put(token.toLowerCase(), occurrences);
@@ -51,19 +50,23 @@ public class Tokenizer {
         String[] tokens = tokenize(inputString);
         List<String> tokenList = new ArrayList<>(Arrays.asList(tokens));
         List<String> strippedTokenList = stripTokens(tokenList);
-        Collections.sort(strippedTokenList);
-        return tokenList;
+        return strippedTokenList;
 
     }
 
     private String strip(String str) {
-        return str.replaceAll("(\'|\"|\\\\|:)", "");
+        String strippedToken = str.replaceAll("(\'|\"|\\\\|:\\`)", "");
+        return strippedToken;
     }
 
     private List<String> stripTokens(List<String> tokens) {
         List<String> retTokens = new ArrayList<>();
         for (String token : tokens) {
-            retTokens.add(strip(token));
+            if (!token.equals("")) {
+                String stripped = strip(token);
+                if (!stripped.equals(""))
+                    retTokens.add(stripped);
+            }
         }
         return retTokens;
     }

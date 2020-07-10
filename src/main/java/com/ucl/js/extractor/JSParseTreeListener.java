@@ -1,4 +1,4 @@
-package com.ucl.js.parser;
+package com.ucl.js.extractor;
 
 
 import com.ucl.js.document.CodeBlock;
@@ -84,6 +84,8 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         CodeBlock codeBlock = new CodeBlock(this.sourceFile.getParentId(), blockIdCounter,
                 this.sourceFile.getFilePath(), startLine, endLine, tokenStream, numberOfTokens);
         this.codeBlocks.add(codeBlock);
+        this.sourceStartEndMap.put(startLine, endLine);
+        this.sourceCodeMap.put(startLine, codeStream);
         this.blockIdCounter++;
     }
 
@@ -119,7 +121,7 @@ public class JSParseTreeListener extends JavaScriptParserBaseListener {
         StringBuilder builder = new StringBuilder();
         List<String> terminalNodes = traverseParseTree(tree);
         for (String tm : terminalNodes) {
-            builder.append(tm).append("\\s");
+            builder.append(tm).append(" ");
         }
         return builder.toString().trim();
     }
