@@ -32,7 +32,7 @@ lexer grammar JavaScriptLexer;
 
 channels { ERROR }
 
-options { superClass=JavaScriptLexerBase; }
+options { superClass=com.ucl.js.extractor.antlr.JavaScriptLexerBase; }
 
 HashBangLine:                   { this.IsStartOfFile()}? '#!' ~[\r\n\u2028\u2029]*; // only allowed at start
 MultiLineComment:               '/*' .*? '*/'             -> channel(HIDDEN);

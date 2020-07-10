@@ -9,34 +9,43 @@ import com.ucl.js.tokenizer.SourcerCCJSTokenizer;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class Executor {
 
     public static void main(String[] args) {
-        String sourceDirectoryPath = PropertyFileLoader.getPropertyByName("sourceDirectoryPath");
-        String headerFilePath = PropertyFileLoader.getPropertyByName("headerFilePath");
-        String tokenFilePath = PropertyFileLoader.getPropertyByName("tokenFilePath");
-        String granularity = PropertyFileLoader.getPropertyByName("granularity");
-        String language = PropertyFileLoader.getPropertyByName("language");
-        int maximumLine = Integer.parseInt(PropertyFileLoader.getPropertyByName("maximumLine"));
-        int minimumLine = Integer.parseInt(PropertyFileLoader.getPropertyByName("minimumLine"));
-        int maximumToken = Integer.parseInt(PropertyFileLoader.getPropertyByName("maximumToken"));
-        int minimumToken = Integer.parseInt(PropertyFileLoader.getPropertyByName("minimumToken"));
-        int numberOfThread = Integer.parseInt(PropertyFileLoader.getPropertyByName("numberOfThread"));
-
-        Configuration configuration = new Configuration(sourceDirectoryPath,
-                headerFilePath, tokenFilePath, granularity, language, maximumLine, minimumLine, maximumToken, minimumToken, numberOfThread);
-
-        if (checkConfiguration(configuration)) {
-            //executeTokenizer(configuration);
+        File configFile = new File(args[1]);
+        if (configFile.isFile()) {
+            Map<String, String> properties = PropertyFileLoader.getProperties(configFile);
+            Configuration configuration = getConfiguration(properties);
+            if (checkConfiguration(configuration)) {
+                executeTokenizer(configuration);
+            }
         }
     }
+
+    public static Configuration getConfiguration(Map<String, String> properties) {
+        String sourceDirectoryPath = properties.get("sourceDirectoryPath");
+        String headerFilePath = properties.get("headerFilePath");
+        String tokenFilePath = properties.get("tokenFilePath");
+        String granularity = properties.get("granularity");
+        String language = properties.get("language");
+        int maximumLine = Integer.parseInt(properties.get("maximumLine"));
+        int minimumLine = Integer.parseInt(properties.get("minimumLine"));
+        int maximumToken = Integer.parseInt(properties.get("maximumToken"));
+        int minimumToken = Integer.parseInt(properties.get("minimumToken"));
+        int numberOfThread = Integer.parseInt(properties.get("numberOfThread"));
+        Configuration configuration = new Configuration(sourceDirectoryPath,
+                headerFilePath, tokenFilePath, granularity, language, maximumLine, minimumLine, maximumToken, minimumToken, numberOfThread);
+        return configuration;
+    }
+
 
     public static boolean checkConfiguration(Configuration configuration) {
         File sourceDir = new File(configuration.getSourceDirectoryPath());
         if (!sourceDir.isDirectory())
             return false;
-        if (!configuration.getGranularity().equals("function") || !configuration.getGranularity().equals("file"))
+        if (!(configuration.getGranularity().equals("function") || configuration.getGranularity().equals("file")))
             return false;
         if (!configuration.getLanguage().equals("javascript"))
             return false;
@@ -52,6 +61,5 @@ public class Executor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

@@ -1,5 +1,6 @@
-package javascript;
+package com.ucl.js.extractor.antlr;
 
+import javascript.JavaScriptParser;
 import org.antlr.v4.runtime.*;
 
 /**

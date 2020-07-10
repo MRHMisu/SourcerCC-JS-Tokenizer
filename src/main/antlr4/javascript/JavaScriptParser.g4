@@ -32,7 +32,7 @@ parser grammar JavaScriptParser;
 
 options {
     tokenVocab=JavaScriptLexer;
-    superClass=JavaScriptParserBase;
+    superClass=com.ucl.js.extractor.antlr.JavaScriptParserBase;
 }
 
 program
