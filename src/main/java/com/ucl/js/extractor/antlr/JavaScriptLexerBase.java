@@ -1,7 +1,8 @@
 package com.ucl.js.extractor.antlr;
 
 
-import javascript.JavaScriptLexer;
+
+import com.ucl.js.JavaScriptLexer;
 import org.antlr.v4.runtime.*;
 
 import java.util.Stack;

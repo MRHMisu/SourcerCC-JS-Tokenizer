@@ -1,11 +1,11 @@
 package com.ucl.js.tokenizer;
 
+import com.ucl.js.JavaScriptParser;
 import com.ucl.js.document.Configuration;
 import com.ucl.js.document.SourceFile;
 import com.ucl.js.extractor.Builder;
 import com.ucl.js.extractor.JSParseTreeListener;
 import com.ucl.js.document.CodeBlock;
-import javascript.JavaScriptParser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -32,7 +32,7 @@ public final class SourcerCCJSTokenizer {
         List<CodeBlock> tokenizedCodeBlocks = new ArrayList<>();
         File rootDir = new File(this.configuration.getSourceDirectoryPath());
         List<SourceFile> filePaths = FileProcessor.getJavaScriptSourceFilePaths(rootDir);
-        List<List<SourceFile>> filePathBatches = ListUtils.partition(filePaths, this.configuration.getNumberOfThread());
+        List<List<SourceFile>> filePathBatches = ListUtils.partition(filePaths, this.configuration.getNumberOfThreads());
 
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_CORE);
         // Callable, return a future, submit and run the task async
@@ -97,8 +97,8 @@ public final class SourcerCCJSTokenizer {
         List<CodeBlock> filteredCodeBlocks = new ArrayList<>();
         for (CodeBlock cb : codeBlocks) {
             int range = cb.getEndLine() - cb.getStartLine();
-            if (range <= this.configuration.getMaximumLine() && range >= this.configuration.getMinimumLine()) {
-                if (cb.getNumberOfTokens() >= this.configuration.getMinimumToken() && cb.getNumberOfTokens() <= this.configuration.getMaximumToken()) {
+            if (range <= this.configuration.getMaximumLines() && range >= this.configuration.getMinimumLines()) {
+                if (cb.getNumberOfTokens() >= this.configuration.getMinimumTokens() && cb.getNumberOfTokens() <= this.configuration.getMaximumTokens()) {
                     filteredCodeBlocks.add(cb);
                 }
             }

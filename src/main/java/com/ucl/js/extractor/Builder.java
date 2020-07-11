@@ -1,7 +1,8 @@
 package com.ucl.js.extractor;
 
-import javascript.JavaScriptLexer;
-import javascript.JavaScriptParser;
+
+import com.ucl.js.JavaScriptLexer;
+import com.ucl.js.JavaScriptParser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 

@@ -55,7 +55,7 @@ public class Tokenizer {
     }
 
     private String strip(String str) {
-        String strippedToken = str.replaceAll("(\'|\"|\\\\|:\\`)", "");
+        String strippedToken = str.replaceAll("(\'|\"|\\\\|:|\\`)", "");
         return strippedToken;
     }
 

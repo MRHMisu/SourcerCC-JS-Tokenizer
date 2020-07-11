@@ -4,10 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>com.ucl.js</groupId>
     <artifactId>SourcerCC-JS-Tokenizer</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <packaging>jar</packaging>
+    <name>sourcercc-js-tokenizer</name>
 
     <dependencies>
         <dependency>
@@ -37,7 +38,6 @@
         </dependency>
     </dependencies>
 
-
     <build>
         <plugins>
             <plugin>
@@ -55,10 +55,20 @@
                 <version>4.8</version>
                 <executions>
                     <execution>
-                        <id>antlr</id>
+                        <id>antlr-javascript</id>
                         <goals>
                             <goal>antlr4</goal>
                         </goals>
+                        <configuration>
+                            <arguments>
+                                <argument>-package</argument>
+                                <argument>com.ucl.js</argument>
+                            </arguments>
+                            <sourceDirectory>${basedir}/src/main/antlr4/javascript</sourceDirectory>
+                            <outputDirectory>
+                                ${project.build.directory}/generated-sources/com/ucl/js
+                            </outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

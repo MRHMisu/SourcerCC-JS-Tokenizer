@@ -1,6 +1,7 @@
 package com.ucl.js.extractor.antlr;
 
-import javascript.JavaScriptParser;
+
+import com.ucl.js.JavaScriptParser;
 import org.antlr.v4.runtime.*;
 
 /**

@@ -1,11 +1,11 @@
 package com.ucl.js.extractor;
 
 
+import com.ucl.js.JavaScriptParser;
+import com.ucl.js.JavaScriptParserBaseListener;
 import com.ucl.js.document.CodeBlock;
 import com.ucl.js.document.SourceFile;
 import com.ucl.js.tokenizer.Tokenizer;
-import javascript.JavaScriptParser;
-import javascript.JavaScriptParserBaseListener;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNodeImpl;

@@ -1,4 +1,5 @@
 HELP.md
+target
 target/classes
 target/maven-status
 !.mvn/wrapper/maven-wrapper.jar

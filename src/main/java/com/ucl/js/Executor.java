@@ -30,13 +30,13 @@ public class Executor {
         String tokenFilePath = properties.get("tokenFilePath");
         String granularity = properties.get("granularity");
         String language = properties.get("language");
-        int maximumLine = Integer.parseInt(properties.get("maximumLine"));
-        int minimumLine = Integer.parseInt(properties.get("minimumLine"));
-        int maximumToken = Integer.parseInt(properties.get("maximumToken"));
-        int minimumToken = Integer.parseInt(properties.get("minimumToken"));
-        int numberOfThread = Integer.parseInt(properties.get("numberOfThread"));
+        int maximumLines = Integer.parseInt(properties.get("maximumLines"));
+        int minimumLines = Integer.parseInt(properties.get("minimumLines"));
+        int maximumTokens = Integer.parseInt(properties.get("maximumTokens"));
+        int minimumTokens = Integer.parseInt(properties.get("minimumTokens"));
+        int numberOfThreads = Integer.parseInt(properties.get("numberOfThreads"));
         Configuration configuration = new Configuration(sourceDirectoryPath,
-                headerFilePath, tokenFilePath, granularity, language, maximumLine, minimumLine, maximumToken, minimumToken, numberOfThread);
+                headerFilePath, tokenFilePath, granularity, language, maximumLines, minimumLines, maximumTokens, minimumTokens, numberOfThreads);
         return configuration;
     }
 

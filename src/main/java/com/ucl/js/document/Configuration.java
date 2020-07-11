@@ -8,25 +8,25 @@ public class Configuration {
     private String tokenFilePath;
     private String granularity;
     private String language;
-    private int maximumLine;
-    private int minimumLine;
-    private int maximumToken;
-    private int minimumToken;
-    private int numberOfThread;
+    private int maximumLines;
+    private int minimumLines;
+    private int maximumTokens;
+    private int minimumTokens;
+    private int numberOfThreads;
 
     public Configuration(String sourceDirectoryPath, String headerFilePath, String tokenFilePath,
-                         String granularity, String language, int maximumLine, int minimumLine, int maximumToken,
-                         int minimumToken, int numberOfThread) {
+                         String granularity, String language, int maximumLines, int minimumLines, int maximumTokens,
+                         int minimumTokens, int numberOfThreads) {
         this.sourceDirectoryPath = sourceDirectoryPath;
         this.headerFilePath = headerFilePath;
         this.tokenFilePath = tokenFilePath;
         this.granularity = granularity;
         this.language = language;
-        this.maximumLine = maximumLine;
-        this.minimumLine = minimumLine;
-        this.maximumToken = maximumToken;
-        this.minimumToken = minimumToken;
-        this.numberOfThread = numberOfThread;
+        this.maximumLines = maximumLines;
+        this.minimumLines = minimumLines;
+        this.maximumTokens = maximumTokens;
+        this.minimumTokens = minimumTokens;
+        this.numberOfThreads = numberOfThreads;
     }
 
     public String getSourceDirectoryPath() {
@@ -49,23 +49,23 @@ public class Configuration {
         return language;
     }
 
-    public int getMaximumLine() {
-        return maximumLine;
+    public int getMaximumLines() {
+        return maximumLines;
     }
 
-    public int getMinimumLine() {
-        return minimumLine;
+    public int getMinimumLines() {
+        return minimumLines;
     }
 
-    public int getMaximumToken() {
-        return maximumToken;
+    public int getMaximumTokens() {
+        return maximumTokens;
     }
 
-    public int getMinimumToken() {
-        return minimumToken;
+    public int getMinimumTokens() {
+        return minimumTokens;
     }
 
-    public int getNumberOfThread() {
-        return numberOfThread;
+    public int getNumberOfThreads() {
+        return numberOfThreads;
     }
 }

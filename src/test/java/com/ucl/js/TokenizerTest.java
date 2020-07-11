@@ -19,11 +19,11 @@ public class TokenizerTest {
         properties.put("tokenFilePath", "/home/mrhmisu/UCL-MS/Test-Data/token.file");
         properties.put("granularity", "function");
         properties.put("language", "javascript");
-        properties.put("maximumLine", "5000");
-        properties.put("minimumLine", "6");
-        properties.put("maximumToken", "5000");
-        properties.put("minimumToken", "5");
-        properties.put("numberOfThread", "4");
+        properties.put("maximumLines", "5000");
+        properties.put("minimumLines", "6");
+        properties.put("maximumTokens", "5000");
+        properties.put("minimumTokens", "5");
+        properties.put("numberOfThreads", "4");
     }
 
     @Test
