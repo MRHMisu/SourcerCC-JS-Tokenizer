@@ -34,11 +34,5 @@ public class TokenizerTest {
         }
     }
 
-    @Test
-    public void strip() {
-        String str = "\"id\"";
-        String strippedToken = str.replaceAll("(\'|\"|\\\\|:)", "");
-        System.out.println(strippedToken);
-    }
 
 }

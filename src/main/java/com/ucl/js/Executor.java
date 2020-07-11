@@ -14,7 +14,7 @@ import java.util.Map;
 public class Executor {
 
     public static void main(String[] args) {
-        File configFile = new File(args[1]);
+        File configFile = new File(args[0]);
         if (configFile.isFile()) {
             Map<String, String> properties = PropertyFileLoader.getProperties(configFile);
             Configuration configuration = getConfiguration(properties);

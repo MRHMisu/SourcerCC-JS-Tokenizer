@@ -20,11 +20,11 @@ public class PropertyFileLoader {
             properties.put("tokenFilePath", prop.getProperty("tokenFilePath"));
             properties.put("granularity", prop.getProperty("granularity"));
             properties.put("language", prop.getProperty("language"));
-            properties.put("maximumLine", prop.getProperty("maximumLine"));
-            properties.put("minimumLine", prop.getProperty("minimumLine"));
-            properties.put("maximumToken", prop.getProperty("maximumToken"));
-            properties.put("minimumToken", prop.getProperty("minimumToken"));
-            properties.put("numberOfThread", prop.getProperty("numberOfThread"));
+            properties.put("maximumLines", prop.getProperty("maximumLines"));
+            properties.put("minimumLines", prop.getProperty("minimumLines"));
+            properties.put("maximumTokens", prop.getProperty("maximumTokens"));
+            properties.put("minimumTokens", prop.getProperty("minimumTokens"));
+            properties.put("numberOfThreads", prop.getProperty("numberOfThreads"));
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
