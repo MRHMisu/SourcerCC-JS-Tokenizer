@@ -47,13 +47,20 @@ public class CodeBlock {
         return numberOfTokens;
     }
 
+    public void setBlockId(long blockId) {
+        this.blockId = blockId;
+    }
+
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
+    }
+
     public String getHeaderLine() {
-        return this.parentId + "," + this.filePath + "," + this.getStartLine() + "," + this.getEndLine() + "\n";
+        return this.blockId + "," + this.filePath + "," + this.getStartLine() + "," + this.getEndLine() + "\n";
 
     }
 
     public String getTokenLine() {
-        return this.parentId + "," + this.getBlockId() + "@#@" + this.getTokenStream() + "\n";
-
+        return this.blockId + "," + this.parentId + "@#@" + this.getTokenStream() + "\n";
     }
 }

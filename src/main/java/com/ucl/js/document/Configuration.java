@@ -68,4 +68,40 @@ public class Configuration {
     public int getNumberOfThreads() {
         return numberOfThreads;
     }
+
+    public void setMaximumLines(int maximumLines) {
+        this.maximumLines = maximumLines;
+    }
+
+    public void setMinimumLines(int minimumLines) {
+        this.minimumLines = minimumLines;
+    }
+
+    public void setMaximumTokens(int maximumTokens) {
+        this.maximumTokens = maximumTokens;
+    }
+
+    public void setMinimumTokens(int minimumTokens) {
+        this.minimumTokens = minimumTokens;
+    }
+
+    public void setNumberOfThreads(int numberOfThreads) {
+        this.numberOfThreads = numberOfThreads;
+    }
+
+    @Override
+    public String toString() {
+        return "Configuration{" + '\n' +
+                "\tsourceDirectoryPath=" + sourceDirectoryPath + '\n' +
+                "\theaderFilePath=" + headerFilePath + '\n' +
+                "\ttokenFilePath=" + tokenFilePath + '\n' +
+                "\tgranularity=" + granularity + '\n' +
+                "\tlanguage=" + language + '\n' +
+                "\tmaximumLines=" + maximumLines + '\n' +
+                "\tminimumLines=" + minimumLines + '\n' +
+                "\tmaximumTokens=" + maximumTokens + '\n' +
+                "\tminimumTokens=" + minimumTokens + '\n' +
+                "\tnumberOfThreads=" + numberOfThreads + '\n' +
+                '}';
+    }
 }

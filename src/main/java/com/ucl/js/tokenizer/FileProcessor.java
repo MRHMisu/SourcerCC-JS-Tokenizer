@@ -35,7 +35,7 @@ public class FileProcessor {
         for (CodeBlock cb : codeBlocks) {
             headerBuilder.append(cb.getHeaderLine());
         }
-        headerWriter.append(headerBuilder.toString());
+        headerWriter.write(headerBuilder.toString());
         headerWriter.close();
 
     }
@@ -46,7 +46,7 @@ public class FileProcessor {
         for (CodeBlock cb : codeBlocks) {
             tokenBuilder.append(cb.getTokenLine());
         }
-        headerWriter.append(tokenBuilder.toString());
+        headerWriter.write(tokenBuilder.toString());
         headerWriter.close();
 
     }

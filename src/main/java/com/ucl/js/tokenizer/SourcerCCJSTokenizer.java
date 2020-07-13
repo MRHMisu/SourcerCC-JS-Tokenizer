@@ -20,15 +20,24 @@ import java.util.concurrent.*;
 public final class SourcerCCJSTokenizer {
 
     private final int NUMBER_OF_CORE = Runtime.getRuntime().availableProcessors();
-    private Configuration configuration;
+    private final Configuration configuration;
 
     public SourcerCCJSTokenizer(Configuration configuration) {
         this.configuration = configuration;
     }
 
+    public List<CodeBlock> tokenizeSourceFiles() {
+        List<CodeBlock> codeBlocks = tokenizeSourceFilesConcurrently();
+        long blockId = 0;
+        for (CodeBlock cb : codeBlocks) {
+            cb.setParentId(-1);
+            cb.setBlockId(blockId);
+            blockId++;
+        }
+        return codeBlocks;
+    }
 
     public List<CodeBlock> tokenizeSourceFilesConcurrently() {
-
         List<CodeBlock> tokenizedCodeBlocks = new ArrayList<>();
         File rootDir = new File(this.configuration.getSourceDirectoryPath());
         List<SourceFile> filePaths = FileProcessor.getJavaScriptSourceFilePaths(rootDir);
@@ -38,9 +47,7 @@ public final class SourcerCCJSTokenizer {
         // Callable, return a future, submit and run the task async
         List<Callable<List<CodeBlock>>> listOfCallable = new ArrayList<>();
         for (List<SourceFile> sourceFileList : filePathBatches) {
-            Callable<List<CodeBlock>> c = () -> {
-                return parseCodeBlocks(sourceFileList);
-            };
+            Callable<List<CodeBlock>> c = () -> parseCodeBlocks(sourceFileList);
             listOfCallable.add(c);
         }
         try {
@@ -82,9 +89,6 @@ public final class SourcerCCJSTokenizer {
                 List<CodeBlock> codeBlocks = jsParseTreeListener.getCodeBlocks();
                 codeBlock.addAll(filterCodeBlock(codeBlocks));
             }
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-            System.err.println("Source file->" + sourceFile.getFilePath() + "-cannot be parsed ");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.err.println("Source file->" + sourceFile.getFilePath() + "-cannot be parsed ");
@@ -92,17 +96,23 @@ public final class SourcerCCJSTokenizer {
         return codeBlock;
     }
 
-
     private List<CodeBlock> filterCodeBlock(List<CodeBlock> codeBlocks) {
         List<CodeBlock> filteredCodeBlocks = new ArrayList<>();
         for (CodeBlock cb : codeBlocks) {
             int range = cb.getEndLine() - cb.getStartLine();
-            if (range <= this.configuration.getMaximumLines() && range >= this.configuration.getMinimumLines()) {
-                if (cb.getNumberOfTokens() >= this.configuration.getMinimumTokens() && cb.getNumberOfTokens() <= this.configuration.getMaximumTokens()) {
-                    filteredCodeBlocks.add(cb);
-                }
+            int tokenLength = cb.getNumberOfTokens();
+            if (checkCodeBlockSize(range) && checkCodeBlockTokenLength(tokenLength)) {
+                filteredCodeBlocks.add(cb);
             }
         }
         return filteredCodeBlocks;
+    }
+
+    private boolean checkCodeBlockSize(int range) {
+        return range >= this.configuration.getMinimumLines() && range <= this.configuration.getMaximumLines();
+    }
+
+    private boolean checkCodeBlockTokenLength(int tokenLength) {
+        return tokenLength >= this.configuration.getMinimumTokens() && tokenLength <= this.configuration.getMaximumTokens();
     }
 }

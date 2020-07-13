@@ -18,9 +18,27 @@ public class Executor {
         if (configFile.isFile()) {
             Map<String, String> properties = PropertyFileLoader.getProperties(configFile);
             Configuration configuration = getConfiguration(properties);
-            if (checkConfiguration(configuration)) {
+            System.out.println(configuration.toString());
+            System.out.println("Checking Configuration...");
+            if (validateConfiguration(configuration)) {
+                fixedConfiguration(configuration);
+                System.out.println("Execution Started...");
                 executeTokenizer(configuration);
+            } else {
+                System.out.println("Wrong Configuration Parameters");
             }
+        }
+    }
+
+    public static void executeTokenizer(Configuration configuration) {
+        SourcerCCJSTokenizer sc = new SourcerCCJSTokenizer(configuration);
+        List<CodeBlock> codeBlocks = sc.tokenizeSourceFiles();
+        try {
+            FileProcessor.writeHeaderFile(codeBlocks, configuration.getHeaderFilePath());
+            FileProcessor.writeTokenFile(codeBlocks, configuration.getTokenFilePath());
+            System.out.println("Task Completed.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -35,13 +53,11 @@ public class Executor {
         int maximumTokens = Integer.parseInt(properties.get("maximumTokens"));
         int minimumTokens = Integer.parseInt(properties.get("minimumTokens"));
         int numberOfThreads = Integer.parseInt(properties.get("numberOfThreads"));
-        Configuration configuration = new Configuration(sourceDirectoryPath,
+        return new Configuration(sourceDirectoryPath,
                 headerFilePath, tokenFilePath, granularity, language, maximumLines, minimumLines, maximumTokens, minimumTokens, numberOfThreads);
-        return configuration;
     }
 
-
-    public static boolean checkConfiguration(Configuration configuration) {
+    public static boolean validateConfiguration(Configuration configuration) {
         File sourceDir = new File(configuration.getSourceDirectoryPath());
         if (!sourceDir.isDirectory())
             return false;
@@ -49,17 +65,31 @@ public class Executor {
             return false;
         if (!configuration.getLanguage().equals("javascript"))
             return false;
-        return true;
+        if (configuration.getMinimumLines() < 0 || configuration.getMaximumLines() < 0)
+            return false;
+        if (configuration.getMinimumTokens() < 0 || configuration.getMaximumTokens() < 0)
+            return false;
+        if (configuration.getMaximumTokens() != 0 && (configuration.getMinimumTokens() >= configuration.getMaximumTokens()))
+            return false;
+        if (configuration.getMaximumLines() != 0 && (configuration.getMinimumLines() >= configuration.getMaximumLines()))
+            return false;
+        return configuration.getNumberOfThreads() >= 0;
     }
 
-    public static void executeTokenizer(Configuration configuration) {
-        SourcerCCJSTokenizer sc = new SourcerCCJSTokenizer(configuration);
-        List<CodeBlock> codeBlocks = sc.tokenizeSourceFilesConcurrently();
-        try {
-            FileProcessor.writeHeaderFile(codeBlocks, configuration.getHeaderFilePath());
-            FileProcessor.writeTokenFile(codeBlocks, configuration.getTokenFilePath());
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static void fixedConfiguration(Configuration configuration) {
+        int numberOfCore = Runtime.getRuntime().availableProcessors();
+        if (configuration.getNumberOfThreads() > numberOfCore) {
+            configuration.setNumberOfThreads(numberOfCore);
+        }
+        if (configuration.getMinimumLines() == 0 && configuration.getMaximumLines() == 0) {
+            configuration.setMaximumLines(Integer.MAX_VALUE);
+        } else if (configuration.getMinimumLines() != 0 && configuration.getMaximumLines() == 0) {
+            configuration.setMaximumLines(Integer.MAX_VALUE);
+        }
+        if (configuration.getMinimumTokens() == 0 && configuration.getMaximumTokens() == 0) {
+            configuration.setMaximumTokens(Integer.MAX_VALUE);
+        } else if (configuration.getMinimumTokens() != 0 && configuration.getMaximumTokens() == 0) {
+            configuration.setMaximumTokens(Integer.MAX_VALUE);
         }
     }
 }
