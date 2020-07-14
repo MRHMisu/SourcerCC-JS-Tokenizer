@@ -28,11 +28,11 @@ public final class SourcerCCJSTokenizer {
 
     public List<CodeBlock> tokenizeSourceFiles() {
         List<CodeBlock> codeBlocks = tokenizeSourceFilesConcurrently();
-        long blockId = 0;
+        long blockParentIdCounter = 0;
         for (CodeBlock cb : codeBlocks) {
-            cb.setParentId(-1);
-            cb.setBlockId(blockId);
-            blockId++;
+            cb.setParentId(blockParentIdCounter);
+            cb.setBlockId(blockParentIdCounter);
+            blockParentIdCounter++;
         }
         return codeBlocks;
     }
