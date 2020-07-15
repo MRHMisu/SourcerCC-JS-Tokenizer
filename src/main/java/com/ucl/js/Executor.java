@@ -33,6 +33,9 @@ public class Executor {
     public static void executeTokenizer(Configuration configuration) {
         SourcerCCJSTokenizer sc = new SourcerCCJSTokenizer(configuration);
         List<CodeBlock> codeBlocks = sc.tokenizeSourceFiles();
+        System.out.println(sc.getNumberOfFiles() + " Source Files Found");
+        System.out.println(sc.getNumberOfMethods() + " Methods are Extracted");
+        System.out.println("After filtering " + codeBlocks.size() + " Methods are Collected");
         try {
             FileProcessor.writeHeaderFile(codeBlocks, configuration.getHeaderFilePath());
             FileProcessor.writeTokenFile(codeBlocks, configuration.getTokenFilePath());

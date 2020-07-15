@@ -21,6 +21,16 @@ public final class SourcerCCJSTokenizer {
 
     private final int NUMBER_OF_CORE = Runtime.getRuntime().availableProcessors();
     private final Configuration configuration;
+    private long numberOfFiles = 0;
+    private long numberOfMethods = 0;
+
+    public long getNumberOfFiles() {
+        return this.numberOfFiles;
+    }
+
+    public long getNumberOfMethods() {
+        return this.numberOfMethods;
+    }
 
     public SourcerCCJSTokenizer(Configuration configuration) {
         this.configuration = configuration;
@@ -41,6 +51,7 @@ public final class SourcerCCJSTokenizer {
         List<CodeBlock> tokenizedCodeBlocks = new ArrayList<>();
         File rootDir = new File(this.configuration.getSourceDirectoryPath());
         List<SourceFile> filePaths = FileProcessor.getJavaScriptSourceFilePaths(rootDir);
+        this.numberOfFiles = filePaths.size();
         List<List<SourceFile>> filePathBatches = ListUtils.partition(filePaths, this.configuration.getNumberOfThreads());
 
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_CORE);
@@ -98,6 +109,7 @@ public final class SourcerCCJSTokenizer {
 
     private List<CodeBlock> filterCodeBlock(List<CodeBlock> codeBlocks) {
         List<CodeBlock> filteredCodeBlocks = new ArrayList<>();
+        this.numberOfMethods += codeBlocks.size();
         for (CodeBlock cb : codeBlocks) {
             int range = cb.getEndLine() - cb.getStartLine();
             int tokenLength = cb.getNumberOfTokens();
